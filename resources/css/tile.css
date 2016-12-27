@@ -1,0 +1,94 @@
+body {
+  overflow: hidden;
+  font-size: 11pt;
+  color: white; }
+
+a {
+  color: deepPink;
+  text-decoration: none; }
+
+button {
+  background-color: transparent;
+  border: 0;
+  color: white;
+  overflow: visible;
+  cursor: pointer; }
+  button svg {
+    transform: scale(1);
+    transition: all 250ms ease;
+    pointer-events: none;
+    margin: 8px;
+    fill: currentColor; }
+  button a {
+    display: block;
+    color: currentColor; }
+  button:hover {
+    color: deepPink; }
+    button:hover svg {
+      transform: scale(1.5); }
+  button:active svg {
+    transform: scale(0.75); }
+
+.Tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer; }
+  .Tile-NotRead {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-right: 3px;
+    transform: translateY(1px);
+    background-color: deepPink; }
+  .Tile-Background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transform: scale(1);
+    transition: all 500ms ease; }
+  .Tile-BackgroundHover {
+    opacity: 0; }
+    .Tile-BackgroundHover:hover {
+      opacity: 1;
+      transform: scale(1.5); }
+  .Tile-Content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: calc(100% - 31px);
+    height: calc(100% - 31px);
+    padding: 16px;
+    margin: 0;
+    pointer-events: none;
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)); }
+  .Tile-Category {
+    font-size: 10pt;
+    letter-spacing: 1pt; }
+  .Tile-ContentSep {
+    width: 100px;
+    margin: 3px auto 0;
+    border-bottom: .5px solid currentColor; }
+  .Tile-Title {
+    margin: 12px;
+    font-size: 26pt;
+    font-weight: 700; }
+  .Tile-Time {
+    font-size: 10pt;
+    margin-bottom: 12px; }
+
+/*# sourceMappingURL=tile.css.map */

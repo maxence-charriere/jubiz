@@ -1,0 +1,49 @@
+$mainColor: white;
+$accentColor: deepPink;
+$backgroundColor: #1e1e1e;
+
+body {
+  overflow: hidden;
+  font-size: 11pt;
+  color: $mainColor;
+}
+
+a {
+  color: $accentColor;
+  text-decoration: none;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  color: $mainColor;
+  overflow: visible;
+  cursor: pointer;
+
+  & svg {
+    transform: scale(1.0);
+    transition: all 250ms ease;
+    pointer-events: none;
+    margin: 8px;
+    fill: currentColor;
+  }
+
+  & a {
+    display: block;
+    color: currentColor;
+  }
+
+  &:hover {
+    color: $accentColor;
+
+    & svg {
+      transform: scale(1.5);
+    }
+  }
+
+  &:active {
+    & svg {
+      transform: scale(0.75);
+    }
+  }
+}

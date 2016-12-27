@@ -1,0 +1,32 @@
+body {
+  overflow: hidden;
+  font-size: 11pt;
+  color: white; }
+
+a {
+  color: deepPink;
+  text-decoration: none; }
+
+button {
+  background-color: transparent;
+  border: 0;
+  color: white;
+  overflow: visible;
+  cursor: pointer; }
+  button svg {
+    transform: scale(1);
+    transition: all 250ms ease;
+    pointer-events: none;
+    margin: 8px;
+    fill: currentColor; }
+  button a {
+    display: block;
+    color: currentColor; }
+  button:hover {
+    color: deepPink; }
+    button:hover svg {
+      transform: scale(1.5); }
+  button:active svg {
+    transform: scale(0.75); }
+
+/*# sourceMappingURL=main.css.map */
