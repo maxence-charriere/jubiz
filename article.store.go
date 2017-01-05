@@ -26,16 +26,16 @@ type ArticlesStore struct {
 	articles articleList
 }
 
-func (s *ArticlesStore) OnDispatch(a flux.Action) {
+func (s *ArticlesStore) OnDispatch(a flux.Action) error {
 	switch a.Name {
 	case articlesRead:
 		s.Read()
 
 	case articlesSave:
-		s.Save()
+		return s.Save()
 
 	case articlesGet:
-		s.Get()
+		return s.Get()
 
 	case articleDisplay:
 		s.Display(a.Payload.(article))
@@ -43,15 +43,16 @@ func (s *ArticlesStore) OnDispatch(a flux.Action) {
 	case articleSet:
 		s.Set(a.Payload.(article))
 	}
+	return nil
 }
 
-func (s *ArticlesStore) Read() {
+func (s *ArticlesStore) Read() error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	articles, err := readArticles(articlesFilename)
 	if err != nil {
-		return
+		return err
 	}
 
 	sort.Sort(articles)
@@ -61,9 +62,10 @@ func (s *ArticlesStore) Read() {
 		Name:    articlesRead,
 		Payload: articles,
 	})
+	return nil
 }
 
-func (s *ArticlesStore) Save() {
+func (s *ArticlesStore) Save() error {
 	e := flux.Event{Name: articlesSave}
 
 	s.mutex.Lock()
@@ -72,17 +74,19 @@ func (s *ArticlesStore) Save() {
 	if err := saveArticles(articlesFilename, s.articles); err != nil {
 		e.Error = err
 		s.Emit(e)
+		return err
 	}
+	return nil
 }
 
-func (s *ArticlesStore) Get() {
+func (s *ArticlesStore) Get() error {
 	e := flux.Event{Name: articlesGet}
 
 	feed, err := getFeed()
 	if err != nil {
 		e.Error = err
 		s.Emit(e)
-		return
+		return err
 	}
 
 	s.mutex.Lock()
@@ -95,6 +99,7 @@ func (s *ArticlesStore) Get() {
 
 	e.Payload = articles
 	s.Emit(e)
+	return nil
 }
 
 func (s *ArticlesStore) Display(a article) {

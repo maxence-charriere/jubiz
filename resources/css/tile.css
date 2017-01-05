@@ -29,6 +29,19 @@ button {
   button:active svg {
     transform: scale(0.75); }
 
+::-webkit-scrollbar {
+  width: 12px;
+  padding: 0; }
+
+::-webkit-scrollbar-track {
+  background-color: #1e1e1e; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 1px solid #4f4f4f;
+  margin: 0;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); }
+
 .Tile {
   position: relative;
   width: 100%;
@@ -43,8 +56,19 @@ button {
     height: 10px;
     border-radius: 100%;
     margin-right: 3px;
-    transform: translateY(1px);
-    background-color: deepPink; }
+    transform: scale(0.8) translateY(0.5px);
+    background-color: deepPink;
+    animation: tilt 2s ease infinite; }
+@keyframes tilt {
+  0% {
+    opacity: 1.0;
+    transform: scale(1.2) translateY(0.5px); }
+  25% {
+    opacity: 0;
+    transform: scale(0.8) translateY(0.5px); }
+  100% {
+    opacity: 1.0;
+    transform: scale(1.2) translateY(0.5px); } }
   .Tile-Background {
     position: absolute;
     top: 0;
@@ -74,6 +98,7 @@ button {
     height: calc(100% - 31px);
     padding: 16px;
     margin: 0;
+    border: 0;
     pointer-events: none;
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)); }
   .Tile-Category {

@@ -60,5 +60,11 @@ func newMainWindow() app.Windower {
 			mainWindow = nil
 			return true
 		},
+		OnFullScreen: func() {
+			flux.Dispatch(flux.Action{Name: navFullScreenON})
+		},
+		OnExitFullScreen: func() {
+			flux.Dispatch(flux.Action{Name: navFullScreenOFF})
+		},
 	})
 }

@@ -5,11 +5,6 @@ import (
 	"github.com/murlokswarm/flux"
 )
 
-var (
-	navDetailShow = "nav-detail-show"
-	navDetailHide = "nav-detail-hide"
-)
-
 type NavView struct {
 	DetailVisibilty string
 }
@@ -48,6 +43,7 @@ func (v *NavView) Render() string {
     <div class="Nav-Home">
         <HomeView />
     </div>
+	<div class="Nav-HomeTitleBar" />
     <div class="Nav-Detail {{.DetailVisibilty}}">
 		<DetailView />
 	</div>

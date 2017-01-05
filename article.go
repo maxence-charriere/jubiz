@@ -24,11 +24,12 @@ var (
 		"Apolline": "https://twitter.com/fubiz",
 	}
 
-	regexpImg      = regexp.MustCompile(`<img.*?/>`)
-	regexpEmptyA   = regexp.MustCompile(`<a(.??)>\s*</a>`)
+	regexpImg      = regexp.MustCompile(`<img\s(.*?)/>`)
+	regexpIframe   = regexp.MustCompile(`<iframe(.*?)/iframe>`)
+	regexpEmptyA   = regexp.MustCompile(`<a(.*?)>\s*</a>`)
 	regexpEmptyP   = regexp.MustCompile(`<p>\s*</p>`)
-	regexpClosingP = regexp.MustCompile(`(\s*</p>\s*</p>)+`)
-	regexpImgSrc   = regexp.MustCompile(`src=".+\.(.{3,4})"`)
+	regexpClosingP = regexp.MustCompile(`</p>(\s*</p>\s*)+`)
+	regexpImgSrc   = regexp.MustCompile(`src="(.+?)\.(.{3,4})"`)
 )
 
 type article struct {
@@ -39,6 +40,7 @@ type article struct {
 	Text       string
 	Categories []string
 	Images     []image
+	Videos     []video
 	Read       bool
 }
 
@@ -64,17 +66,32 @@ func makeArticle(i item) article {
 		Text:       makeArticleText(content),
 		Categories: i.Categories,
 		Images:     makeArticleImages(i.Content),
+		Videos:     makeArticleVideos(i.Content),
 	}
 }
 
 func makeArticleText(content string) string {
 	text := regexpImg.ReplaceAllString(content, "")
+	text = regexpIframe.ReplaceAllString(text, "")
 	text = regexpEmptyA.ReplaceAllString(text, "")
 	text = regexpEmptyP.ReplaceAllString(text, "")
 	text = regexpClosingP.ReplaceAllString(text, "</p>")
 	text = strings.Replace(text, "&", "&amp;", -1)
 	return strings.TrimSpace(text)
+}
 
+func makeArticleVideos(content string) (videos []video) {
+	videoTags := regexpIframe.FindAllString(content, -1)
+
+	for _, tag := range videoTags {
+		v, err := parseVideo(tag)
+		if err != nil {
+			continue
+		}
+
+		videos = append(videos, v)
+	}
+	return
 }
 
 func makeArticleImages(content string) (images []image) {
@@ -135,9 +152,11 @@ func mergeArticleLists(base, new articleList) articleList {
 	}
 
 	for _, a := range new {
-		if _, ok := m[a.URL]; !ok {
-			m[a.URL] = a
+		if art, ok := m[a.URL]; ok {
+			a.Read = art.Read
 		}
+
+		m[a.URL] = a
 	}
 
 	list := make(articleList, 0, len(m))

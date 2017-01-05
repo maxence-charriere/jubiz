@@ -4,8 +4,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: scroll;
-  background-color: #1e1e1e;
+  overflow-y: scroll;
+  background-color: $backgroundColor;
 
   &-Close {
     position: fixed;
@@ -16,6 +16,15 @@
       width: 16px;
       height: 16px;
       margin: 0;
+    }
+  }
+
+  &-CloseFullScreen {
+    left: 0;
+
+    & svg {
+      width: 25px;
+      height: 25px;
     }
   }
 
@@ -84,7 +93,15 @@
     margin: 0;
     padding: 0;
     border: 0;
-    background-color: backgroundColor;
     transform: translate3d(0,0,0);
+  }
+
+  &-Video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 }

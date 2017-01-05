@@ -3,7 +3,7 @@
     "version": "1.0.0.0",
     "icon": "jubiz.png",
     "id": "maxence.Jubiz",
-    "os-min-version": "10.12",
+    "os-min-version": "10.11",
     "role": "None",
     "sandbox": true,
     "supported-files": []
