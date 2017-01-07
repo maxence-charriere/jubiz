@@ -1,13 +1,12 @@
-package main
+package jubiz
 
 import (
-	"encoding/json"
-	"os"
+	"html"
 	"regexp"
 	"strings"
 	"time"
 
-	"html"
+	"net/url"
 
 	"github.com/murlokswarm/log"
 )
@@ -32,35 +31,42 @@ var (
 	regexpImgSrc   = regexp.MustCompile(`src="(.+?)\.(.{3,4})"`)
 )
 
-type article struct {
+type Article struct {
+	ID         string
 	Title      string
-	URL        string
+	URL        *url.URL
 	PubDate    time.Time
-	Author     author
+	Author     Author
 	Text       string
 	Categories []string
-	Images     []image
-	Videos     []video
+	Images     []Image
+	Videos     []Video
 	Read       bool
 }
 
-type articleList []article
+type ArticleList []Article
 
-type author struct {
+type Author struct {
 	Name       string
 	TwitterURL string
 }
 
-func makeArticle(i item) article {
+func makeArticle(i item) (a Article, err error) {
 	pubDate, err := time.Parse("Mon, 02 Jan 2006 15:04:05 -0700", i.PubDate)
 	if err != nil {
 		log.Error(err)
 	}
 
+	u, err := url.Parse(i.Link)
+	if err != nil {
+		return
+	}
+
 	content := html.UnescapeString(i.Content)
-	return article{
+	a = Article{
+		ID:         i.Link,
 		Title:      i.Title,
-		URL:        i.Link,
+		URL:        u,
 		PubDate:    pubDate,
 		Author:     makeAuthor(i.Creator),
 		Text:       makeArticleText(content),
@@ -68,6 +74,7 @@ func makeArticle(i item) article {
 		Images:     makeArticleImages(i.Content),
 		Videos:     makeArticleVideos(i.Content),
 	}
+	return
 }
 
 func makeArticleText(content string) string {
@@ -80,7 +87,7 @@ func makeArticleText(content string) string {
 	return strings.TrimSpace(text)
 }
 
-func makeArticleVideos(content string) (videos []video) {
+func makeArticleVideos(content string) (videos []Video) {
 	videoTags := regexpIframe.FindAllString(content, -1)
 
 	for _, tag := range videoTags {
@@ -94,7 +101,7 @@ func makeArticleVideos(content string) (videos []video) {
 	return
 }
 
-func makeArticleImages(content string) (images []image) {
+func makeArticleImages(content string) (images []Image) {
 	imgTags := regexpImg.FindAllString(content, -1)
 
 	for _, tag := range imgTags {
@@ -125,76 +132,57 @@ func makeArticleImages(content string) (images []image) {
 	return
 }
 
-func makeArticlesFromFeed(f feed) (articles articleList) {
+func MakeArticlesFromFeed(f Feed) (Articles ArticleList) {
 	for _, i := range f.Channel.Items {
-		articles = append(articles, makeArticle(i))
+		a, err := makeArticle(i)
+		if err != nil {
+			continue
+		}
+		Articles = append(Articles, a)
 	}
 	return
 }
 
-func (list articleList) Len() int {
+func (list ArticleList) Len() int {
 	return len(list)
 }
 
-func (list articleList) Less(i, j int) bool {
+func (list ArticleList) Less(i, j int) bool {
 	return list[i].PubDate.After(list[j].PubDate)
 }
 
-func (list articleList) Swap(i, j int) {
+func (list ArticleList) Swap(i, j int) {
 	list[i], list[j] = list[j], list[i]
 }
 
-func mergeArticleLists(base, new articleList) articleList {
-	m := map[string]article{}
+func MergeArticleLists(base, new ArticleList) ArticleList {
+	m := map[string]Article{}
 
 	for _, a := range base {
-		m[a.URL] = a
+		m[a.ID] = a
 	}
 
 	for _, a := range new {
-		if art, ok := m[a.URL]; ok {
+		if art, ok := m[a.ID]; ok {
 			a.Read = art.Read
 		}
-
-		m[a.URL] = a
+		m[a.ID] = a
 	}
 
-	list := make(articleList, 0, len(m))
-
+	list := make(ArticleList, 0, len(m))
 	for _, v := range m {
 		list = append(list, v)
 	}
 	return list
 }
 
-func readArticles(name string) (a articleList, err error) {
-	f, err := os.Open(name)
-	if err != nil {
-		return
-	}
-
-	dec := json.NewDecoder(f)
-	err = dec.Decode(&a)
-	return
-}
-
-func saveArticles(name string, a articleList) error {
-	f, err := os.Create(name)
-	if err != nil {
-		return err
-	}
-
-	enc := json.NewEncoder(f)
-	return enc.Encode(a)
-}
-
-func makeAuthor(name string) author {
+func makeAuthor(name string) Author {
 	twitterURL, ok := twitterURLs[name]
 	if !ok {
 		twitterURL = "https://twitter.com/fubiz"
 	}
 
-	return author{
+	return Author{
 		Name:       name,
 		TwitterURL: twitterURL,
 	}

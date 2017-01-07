@@ -1,4 +1,4 @@
-package main
+package jubiz
 
 import (
 	"errors"
@@ -9,20 +9,19 @@ import (
 )
 
 var (
-	regexpSrc = regexp.MustCompile(`src="(.+?)"`)
-
+	regexpSrc      = regexp.MustCompile(`src="(.+?)"`)
 	videoProviders = []string{
 		"https://www.youtube.com",
 		"https://player.vimeo.com",
-		"//www.dailymotion.com/embed/video",
+		"//www.dailymotion.com/embed/Video",
 	}
 )
 
-type video struct {
+type Video struct {
 	URL *url.URL
 }
 
-func parseVideo(tag string) (v video, err error) {
+func parseVideo(tag string) (v Video, err error) {
 	src := regexpSrc.FindString(tag)
 
 	if len(src) == 0 {
@@ -40,7 +39,7 @@ func parseVideo(tag string) (v video, err error) {
 	endpoint = strings.Trim(endpoint, `"`)
 
 	if !isTrustedVideoSource(endpoint) {
-		err = fmt.Errorf("not trusted video source: %v", src)
+		err = fmt.Errorf("not trusted Video source: %v", src)
 		return
 	}
 
