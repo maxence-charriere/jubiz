@@ -1,4 +1,4 @@
-package main
+package jubiz
 
 import "testing"
 import "html"
@@ -51,8 +51,8 @@ func TestMakeArticleImages(t *testing.T) {
 }
 
 func TestMakeArticlesFromFeed(t *testing.T) {
-	feed, _ := getFeed()
-	t.Logf("%+v", makeArticlesFromFeed(feed))
+	feed, _ := GetFeed()
+	t.Logf("%+v", MakeArticlesFromFeed(feed))
 }
 
 func TestUnescape(t *testing.T) {

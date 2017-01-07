@@ -1,4 +1,4 @@
-package main
+package jubiz
 
 import (
 	"encoding/xml"
@@ -10,7 +10,7 @@ const (
 	feedURL = "http://feeds.feedburner.com/fubiz"
 )
 
-type feed struct {
+type Feed struct {
 	XMLName xml.Name `xml:"rss"`
 	Channel channel  `xml:"channel"`
 }
@@ -29,7 +29,7 @@ type item struct {
 	Content    string   `xml:"encoded"`
 }
 
-func getFeed() (f feed, err error) {
+func GetFeed() (f Feed, err error) {
 	res, err := http.Get(feedURL)
 	if err != nil {
 		return
