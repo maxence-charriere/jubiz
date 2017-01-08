@@ -10,6 +10,7 @@ func (m *MenuBar) Render() string {
 	return `
 <menu>
     <menu label="app">
+        <menuitem label="About" selector="orderFrontStandardAboutPanel:" separator="true" />        
         <menuitem label="Quit" shortcut="meta+q" selector="terminate:" />        
     </menu>
     <EditMenu />
