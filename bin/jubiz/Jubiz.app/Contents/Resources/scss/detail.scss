@@ -1,0 +1,107 @@
+@import "main";
+
+.Detail {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  background-color: $backgroundColor;
+
+  &-Close {
+    position: fixed;
+    left: 60px;
+    z-index: 2;
+
+    & svg {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+  }
+
+  &-CloseFullScreen {
+    left: 0;
+
+    & svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  &-Hero {
+    display: flex;
+    min-height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: translate3d(0,0,0);
+  }
+
+  &-HeroBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  &-HeroContent {
+    width: calc(100% - 48px);
+    padding: 24px;
+    text-align: center;
+    @media (min-width: 721px) {
+      width: calc(720px - 48px);
+    }
+  }
+
+  &-Title {
+    font-size: 34pt;
+    margin: 16px 0;
+  }
+
+  &-Category {
+    letter-spacing: 1pt;
+
+  }
+
+  &-ContentSep {
+    width: 100px;
+    margin: 3px auto 0;
+    border-bottom: .5px solid currentColor;
+  }
+
+  &-Text {
+    text-align: justify;
+    padding: 0;
+    margin: 0;
+
+    & a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-Icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  &-Image {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transform: translate3d(0,0,0);
+  }
+
+  &-Video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+}

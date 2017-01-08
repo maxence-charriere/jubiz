@@ -6,6 +6,8 @@ import (
 )
 
 import (
+	"time"
+
 	"github.com/maxence-charriere/jubiz/bin/jubiz/store"
 	"github.com/maxence-charriere/jubiz/bin/jubiz/view"
 	"github.com/murlokswarm/app"
@@ -21,6 +23,8 @@ func main() {
 		menuBar := &view.MenuBar{}
 		app.MenuBar().Mount(menuBar)
 		mainWindow = newMainWindow()
+
+		go startBackgroundDownload(time.Minute * 20)
 	}
 	app.OnReopen = func(hasVisibleWindow bool) {
 		if mainWindow != nil {
@@ -63,4 +67,15 @@ func newMainWindow() app.Windower {
 		flux.Action{Name: store.SaveArticles},
 	)
 	return win
+}
+
+func startBackgroundDownload(interval time.Duration) {
+	t := time.Tick(interval)
+
+	for range t {
+		flux.Dispatch(
+			flux.Action{Name: store.DownloadArticles},
+			flux.Action{Name: store.SaveArticles},
+		)
+	}
 }

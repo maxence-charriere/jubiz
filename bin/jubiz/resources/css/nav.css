@@ -29,6 +29,9 @@ button {
   button:active svg {
     transform: scale(0.75); }
 
+.Hidden {
+  visibility: hidden; }
+
 ::-webkit-scrollbar {
   width: 12px;
   padding: 0; }
@@ -61,7 +64,6 @@ button {
     width: 100%;
     background-color: transparent; }
   .Nav-Detail {
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;

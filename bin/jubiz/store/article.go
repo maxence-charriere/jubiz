@@ -22,6 +22,7 @@ var (
 var (
 	LocalArticlesLoaded = "art-local-loaded"
 	ArticlesSaved       = "art-saved"
+	ArticlesDownloading = "art-downloading"
 	ArticlesDownloaded  = "art-downloaded"
 	ArticleUpdated      = "art-updated"
 )
@@ -89,21 +90,34 @@ func (s *articleStore) Download() error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
+	s.Emit(flux.Event{
+		Name: ArticlesDownloading,
+	})
+
 	feed, err := jubiz.GetFeed()
 	if err != nil {
+		s.Emit(flux.Event{
+			Name:  ArticlesDownloaded,
+			Error: err,
+		})
 		return err
 	}
 
 	articles := jubiz.MakeArticlesFromFeed(feed)
-	articles = jubiz.MergeArticleLists(s.articles, articles)
+	newCount := 0
+
+	articles, newCount = jubiz.MergeArticleLists(s.articles, articles)
+	if newCount != 0 {
+		app.Dock().SetBadge(newCount)
+	}
+
 	sort.Sort(articles)
 	s.articles = articles
 
-	e := flux.Event{
+	s.Emit(flux.Event{
 		Name:    ArticlesDownloaded,
 		Payload: articles,
-	}
-	s.Emit(e)
+	})
 	return nil
 }
 
@@ -112,7 +126,7 @@ func (s *articleStore) Update(a jubiz.Article) {
 	defer s.mutex.Unlock()
 
 	for i, art := range s.articles {
-		if art.URL == a.URL {
+		if art.ID == a.ID {
 			s.articles[i] = a
 			break
 		}

@@ -155,7 +155,7 @@ func (list ArticleList) Swap(i, j int) {
 	list[i], list[j] = list[j], list[i]
 }
 
-func MergeArticleLists(base, new ArticleList) ArticleList {
+func MergeArticleLists(base, new ArticleList) (list ArticleList, newCount int) {
 	m := map[string]Article{}
 
 	for _, a := range base {
@@ -165,15 +165,17 @@ func MergeArticleLists(base, new ArticleList) ArticleList {
 	for _, a := range new {
 		if art, ok := m[a.ID]; ok {
 			a.Read = art.Read
+		} else {
+			newCount++
 		}
 		m[a.ID] = a
 	}
 
-	list := make(ArticleList, 0, len(m))
+	list = make(ArticleList, 0, len(m))
 	for _, v := range m {
 		list = append(list, v)
 	}
-	return list
+	return
 }
 
 func makeAuthor(name string) Author {

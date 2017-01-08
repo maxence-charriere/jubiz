@@ -6,7 +6,13 @@ import (
 	"github.com/murlokswarm/flux"
 )
 
+const (
+	NavDefaultState = iota
+	NavDetailState
+)
+
 type NavView struct {
+	State           int
 	DetailVisibilty string
 }
 
@@ -21,12 +27,21 @@ func (v *NavView) OnDismount() {
 func (v *NavView) OnStoreEvent(e flux.Event) {
 	switch e.Name {
 	case store.NavShowDetail:
+		v.State = NavDetailState
 		v.DetailVisibilty = "Nav-Detail-Show"
+		app.Render(v)
 
 	case store.NavHideDetail:
+		v.State = NavDefaultState
 		v.DetailVisibilty = "Nav-Detail-Hidden"
+		app.Render(v)
+
+	case store.NavClose:
+		if v.State == NavDefaultState {
+			win := app.Context(v).(app.Windower)
+			win.Close()
+		}
 	}
-	app.Render(v)
 }
 
 func (v *NavView) Render() string {

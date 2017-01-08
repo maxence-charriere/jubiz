@@ -1,0 +1,74 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>   
+    <key>CFBundleVersion</key>
+	<string>1.0.0.0</string>
+
+    <key>CFBundleName</key>
+	<string>Jubiz</string>
+    
+    <key>CFBundleDisplayName</key>
+	<string>Jubiz</string>
+    
+    <key>CFBundleExecutable</key>
+	<string>Jubiz</string>
+	
+    <key>CFBundleIdentifier</key>
+	<string>maxence.Jubiz</string>
+    
+    <key>CFBundlePackageType</key>
+	<string>APPL</string>
+    
+    <key>CFBundleSignature</key>
+	<string>????</string>
+    
+    <key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+	    <string>MacOSX</string>
+	</array>
+
+    <key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+
+    <key>LSMinimumSystemVersion</key>
+	<string>10.11</string>
+
+    <key>CFBundleIconFile</key>
+	<string>jubiz</string>
+
+    <key>LSUIElement</key>
+	<string>true</string>
+
+    <key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+
+	<key>NSAppTransportSecurity</key>
+	<dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
+	<key>com.apple.security.app-sandbox</key>
+    <true/>
+
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+        	<string>Supported files</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
+    

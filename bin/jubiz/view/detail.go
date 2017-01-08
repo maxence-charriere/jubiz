@@ -31,14 +31,19 @@ func (v *DetailView) OnStoreEvent(e flux.Event) {
 	switch e.Name {
 	case store.NavShowDetail:
 		v.Article = e.Payload.(jubiz.Article)
+		app.Render(v)
 
 	case store.NavHideDetail:
 		v.Article = jubiz.Article{}
+		app.Render(v)
 
 	case store.NavToggleFullScreen:
 		v.FullScreen = e.Payload.(bool)
+		app.Render(v)
+
+	case store.NavClose:
+		v.OnCloseClicked()
 	}
-	app.Render(v)
 }
 
 func (v *DetailView) Render() string {
