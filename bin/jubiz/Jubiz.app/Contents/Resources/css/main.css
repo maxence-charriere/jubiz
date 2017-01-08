@@ -29,6 +29,9 @@ button {
   button:active svg {
     transform: scale(0.75); }
 
+.Hidden {
+  visibility: hidden; }
+
 ::-webkit-scrollbar {
   width: 12px;
   padding: 0; }

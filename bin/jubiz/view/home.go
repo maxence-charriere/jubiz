@@ -25,7 +25,7 @@ func (v *HomeView) OnStoreEvent(e flux.Event) {
 	switch e.Name {
 
 	case store.LocalArticlesLoaded:
-		v.Articles = e.Payload.(jubiz.ArticleList)
+		v.Articles, _ = e.Payload.(jubiz.ArticleList)
 		app.Render(v)
 
 	case store.ArticlesDownloading:
@@ -34,7 +34,7 @@ func (v *HomeView) OnStoreEvent(e flux.Event) {
 
 	case store.ArticlesDownloaded:
 		if e.Error == nil {
-			v.Articles = e.Payload.(jubiz.ArticleList)
+			v.Articles, _ = e.Payload.(jubiz.ArticleList)
 		}
 		v.Downloading = false
 		app.Render(v)

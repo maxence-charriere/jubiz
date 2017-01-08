@@ -12,8 +12,9 @@ const (
 )
 
 type NavView struct {
-	State           int
-	DetailVisibilty string
+	State            int
+	DetailVisibility string
+	ErrorVisibility  string
 }
 
 func (v *NavView) OnMount() {
@@ -28,12 +29,20 @@ func (v *NavView) OnStoreEvent(e flux.Event) {
 	switch e.Name {
 	case store.NavShowDetail:
 		v.State = NavDetailState
-		v.DetailVisibilty = "Nav-Detail-Show"
+		v.DetailVisibility = "Nav-Detail-Show"
 		app.Render(v)
 
 	case store.NavHideDetail:
 		v.State = NavDefaultState
-		v.DetailVisibilty = "Nav-Detail-Hidden"
+		v.DetailVisibility = "Nav-Detail-Hidden"
+		app.Render(v)
+
+	case store.NavToggleError:
+		if showErr, ok := e.Payload.(bool); ok && showErr {
+			v.ErrorVisibility = "Nav-Error-Show"
+		} else {
+			v.ErrorVisibility = "Nav-Error-Hidden"
+		}
 		app.Render(v)
 
 	case store.NavClose:
@@ -51,8 +60,11 @@ func (v *NavView) Render() string {
         <HomeView />
     </div>
 	<div class="Nav-HomeTitleBar" />
-    <div class="Nav-Detail {{.DetailVisibilty}}">
+    <div class="Nav-Detail {{.DetailVisibility}}">
 		<DetailView />
+	</div>
+	<div class="Nav-Error {{.ErrorVisibility}}">
+		<Error />
 	</div>
 </div>
     `

@@ -81,14 +81,16 @@ func (s *articleStore) Save() error {
 	defer s.mutex.Unlock()
 
 	if err := jubiz.FileMarshal(articlesName, s.articles); err != nil {
+		s.Emit(flux.Event{
+			Name:  ArticlesSaved,
+			Error: err,
+		})
 		return err
 	}
 	return nil
 }
 
 func (s *articleStore) Download() error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 
 	s.Emit(flux.Event{
 		Name: ArticlesDownloading,
@@ -102,6 +104,9 @@ func (s *articleStore) Download() error {
 		})
 		return err
 	}
+
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 
 	articles := jubiz.MakeArticlesFromFeed(feed)
 	newCount := 0

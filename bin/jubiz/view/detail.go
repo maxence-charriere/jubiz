@@ -57,7 +57,7 @@ func (v *DetailView) Render() string {
 
 	return `
 <div class="Detail">
-    <button class="Detail-Close{{if .FullScreen}} Detail-CloseFullScreen{{end}}" title="Retour" _onclick="OnCloseClicked">
+    <button class="Detail-Close{{if .FullScreen}} Detail-CloseFullScreen{{end}}" title="Back" _onclick="OnCloseClicked">
 		<svg viewBox="0 0 50 50">
 			<path d="M 19.8125 13.09375 A 1.0001 1.0001 0 0 0 19.25 13.40625 L 8.34375 24.28125 L 7.65625 25 L 8.34375 25.71875 L 19.25 36.59375 A 1.0001 1.0001 0 1 0 20.65625 35.1875 L 11.46875 26 L 41 26 A 1.0001 1.0001 0 1 0 41 24 L 11.46875 24 L 20.65625 14.8125 A 1.0001 1.0001 0 0 0 19.8125 13.09375 z" />
 		</svg>
@@ -81,7 +81,7 @@ func (v *DetailView) Render() string {
 							</svg>
 						</a>
 					</button>
-					<button title="Partager" _onmousedown="OnShareClicked">
+					<button title="Share" _onmousedown="OnShareClicked">
 						<svg class="Detail-Icon" viewBox="0 0 50 50">
 							<path d="M 25 0.59375 L 24.28125 1.28125 L 16.28125 9.28125 A 1.016466 1.016466 0 1 0 17.71875 10.71875 L 24 4.4375 L 24 32 A 1.0001 1.0001 0 1 0 26 32 L 26 4.4375 L 32.28125 10.71875 A 1.016466 1.016466 0 1 0 33.71875 9.28125 L 25.71875 1.28125 L 25 0.59375 z M 7 16 L 7 17 L 7 49 L 7 50 L 8 50 L 42 50 L 43 50 L 43 49 L 43 17 L 43 16 L 42 16 L 33 16 A 1.0001 1.0001 0 1 0 33 18 L 41 18 L 41 48 L 9 48 L 9 18 L 17 18 A 1.0001 1.0001 0 1 0 17 16 L 8 16 L 7 16 z" />
 						</svg>

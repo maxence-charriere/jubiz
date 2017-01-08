@@ -1,0 +1,18 @@
+.Error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 32px 0;
+  text-align: center;
+
+  &-Icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  & button:hover {
+    color: white;
+  }
+}

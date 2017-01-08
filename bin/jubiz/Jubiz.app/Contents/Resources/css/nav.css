@@ -29,6 +29,9 @@ button {
   button:active svg {
     transform: scale(0.75); }
 
+.Hidden {
+  visibility: hidden; }
+
 ::-webkit-scrollbar {
   width: 12px;
   padding: 0; }
@@ -94,5 +97,36 @@ button {
   100% {
     opacity: 1.0;
     transform: translateX(-100%); } }
+  .Nav-Error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 30px;
+    background-color: #fb4748;
+    visibility: hidden; }
+    .Nav-Error-Show {
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      animation: showErr 350ms ease; }
+@keyframes showErr {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px); }
+  100% {
+    transform: translateY(0);
+    opacity: 1.0; } }
+    .Nav-Error-Hidden {
+      visibility: hidden;
+      transform: translateY(0);
+      animation: hideErr 350ms ease; }
+@keyframes hideErr {
+  0% {
+    visibility: visible;
+    opacity: 1.0;
+    transform: translate3d(0, 0, 0); }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px); } }
 
 /*# sourceMappingURL=nav.css.map */

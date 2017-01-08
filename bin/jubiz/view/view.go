@@ -11,4 +11,5 @@ func init() {
 	app.RegisterComponent(&HomeView{})
 	app.RegisterComponent(&DetailView{})
 	app.RegisterComponent(&TileView{})
+	app.RegisterComponent(&Error{})
 }

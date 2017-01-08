@@ -63,7 +63,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
     text-align: center; }
     .Home-Download-Icon {
       fill: currentColor;
@@ -86,7 +86,7 @@ button {
       right: 32px;
       display: flex;
       justify-content: flex-end;
-      align-content: center;
+      align-items: center;
       text-align: center;
       pointer-events: none; }
       .Home-Download-Min-Icon {
