@@ -1,10 +1,40 @@
 {
-    "name": "Jubiz",
-    "version": "1.0.0.0",
-    "icon": "jubiz.png",
-    "id": "maxence.Jubiz",
-    "os-min-version": "10.11",
-    "role": "None",
-    "sandbox": true,
-    "supported-files": []
+  "name": "Jubiz",
+  "id": "maxence.Jubiz",
+  "version": "1.0",
+  "build-number": 4243,
+  "icon": "jubiz.png",
+  "dev-region": "en",
+  "deployment-target": "10.12",
+  "copyright": "Copyright © 2017 maxence. All rights reserved",
+  "role": "None",
+  "category": "public.app-category.photography",
+  "sandbox": true,
+  "capabilities": {
+    "network": {
+      "in": false,
+      "out": true
+    },
+    "hardware": {
+      "camera": false,
+      "microphone": false,
+      "usb": false,
+      "printing": false,
+      "bluetooth": false
+    },
+    "app-data": {
+      "contacts": false,
+      "location": false,
+      "calendar": false
+    },
+    "file-access": {
+      "user-selected": "",
+      "downloads": "",
+      "pictures": "",
+      "music": "",
+      "movies": ""
+    }
+  },
+  "app-store": false,
+  "supported-files": []
 }

@@ -41,6 +41,8 @@ func newMainWindow() app.Windower {
 		TitlebarHidden:  true,
 		Width:           1280,
 		Height:          720,
+		MinWidth:        480,
+		MinHeight:       480,
 		BackgroundColor: "#1e1e1e",
 		OnClose: func() bool {
 			mainWindow = nil

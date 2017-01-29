@@ -1,6 +1,7 @@
 package store
 
 import (
+	"path/filepath"
 	"sort"
 	"sync"
 
@@ -28,7 +29,7 @@ var (
 )
 
 var (
-	articlesName = app.Resources().Join("articles.json")
+	articlesName = filepath.Join(app.Storage().Default(), "articles.json")
 )
 
 type articleStore struct {
