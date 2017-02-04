@@ -24,7 +24,7 @@ type WindowMenu struct{}
 func (m *WindowMenu) Render() string {
 	return `
 <menu label="Window">
-    <menuitem label="Close" _onclick="OnCloseClick" shortcut="meta+w" />
+    <menuitem label="Close" onclick="OnCloseClick" shortcut="meta+w" />
 </menu>
     `
 }

@@ -34,7 +34,7 @@ func (v *TileView) Render() string {
 	v.TimeSpan = timeSpanFromNow(v.Article.PubDate)
 
 	return `
-<div class="Tile" _onclick="OnClick">
+<div class="Tile" onclick="OnClick">
 	{{if ge (len .Article.Images) 1 }}
 		<div class="Tile-Background" style="background-image:url('{{(index .Article.Images 0).URL}}')"></div>
 		{{if eq (len .Article.Images) 1 }}
